@@ -1,31 +1,43 @@
-version: '3.7'
+version: "3.1"
 
 services:
   postgres:
-    image: postgres:latest
-    container_name: myapp-postgres
+    container_name: postgres
+    image: postgres:14-alpine
     environment:
-      POSTGRES_USER: ${DBUSER}
-      POSTGRES_PASSWORD: ${DBPASS}
-      POSTGRES_DB: ${DBNAME}
-    ports:
-      - "${DBPORT}:5432"  # Map the external port to the PostgreSQL internal port
-
-  myapp:
-    image: golang:latest
-    container_name: myapp-container
-    working_dir: /go/src/app
+      POSTGRES_DB: myapp
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    restart: always
     volumes:
-      - ./app:/go/src/app  # Mount your Go app directory to the container
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  
+  adminer:
+    container_name: adminer
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 9100:9100
     environment:
-      DB_USER: ${DBUSER}
-      DB_PASS: ${DBPASS}
-      DB_HOST: ${DBHOST}
-      DB_PORT: ${DBPORT}
-      DB_NAME: ${DBNAME}
-      JWT_KEY: ${JWTKey}
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: dracula
+    command: ["php", "-S", "0.0.0.0:9100", "-t", "/var/www/html"]
+
+  api:
+    container_name: kentangapi
+    build: .
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: postgres
+    ports:
+      - 8080:8080
     depends_on:
       - postgres
-    ports:
-      - "8080:8080"  # Expose your app's port, adjust if your app runs on a different port
-    command: go run main.go  # Modify this if you have a different command to start your Go app
+    restart: on-failure
+
+networks:
+  default:
+    name: kentot

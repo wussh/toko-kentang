@@ -1,2 +1,2 @@
 *.env
-/cred.txt
+postgres_data/

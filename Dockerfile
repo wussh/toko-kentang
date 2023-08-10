@@ -1,16 +1,14 @@
-FROM golang:1.19-alpine
+# Use an official Golang runtime as a parent image
+FROM golang:1.20-alpine
 
-##create folder APP
-RUN mkdir /app
+# Set the working directory inside the container
+WORKDIR /go/src/app
 
-##set main directory
-WORKDIR /app
+# Copy the local package files to the container's workspace
+COPY . .
 
-##copy the whole file to app
-ADD . /app
-
-##create executeable
+# Build the Go application
 RUN go build -o main .
 
-##run executeable
-CMD ["/app/main"]
+# Set the command to run the executable
+CMD ["./main"]
