@@ -1,6 +1,8 @@
 package config
 
 import (
+	product "ecommerce/features/product/data"
+	user "ecommerce/features/user/data"
 	"fmt"
 	"log"
 
