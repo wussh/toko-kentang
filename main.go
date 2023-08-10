@@ -1,25 +1,26 @@
 package main
 
 import (
-	"ecommerce/config"
-	cartData "ecommerce/features/cart/data"
-	cartHandler "ecommerce/features/cart/handler"
-	cartService "ecommerce/features/cart/services"
-	productData "ecommerce/features/product/data"
-	productHandler "ecommerce/features/product/handler"
-	productService "ecommerce/features/product/services"
+	"github.com/wussh/tokokentang/config"
+	cartData "github.com/wussh/tokokentang/features/cart/data"
+	cartHandler "github.com/wussh/tokokentang/features/cart/handler"
+	cartService "github.com/wussh/tokokentang/features/cart/services"
+	productData "github.com/wussh/tokokentang/features/product/data"
+	productHandler "github.com/wussh/tokokentang/features/product/handler"
+	productService "github.com/wussh/tokokentang/features/product/services"
 
-	// trxD "ecommerce/features/transaction/data"
-	// trxH "ecommerce/features/transaction/handler"
-	// trxS "ecommerce/features/transaction/services"
+	// trxD "github.com/wussh/tokokentang/features/transaction/data"
+	// trxH "github.com/wussh/tokokentang/features/transaction/handler"
+	// trxS "github.com/wussh/tokokentang/features/transaction/services"
 
-	// tdxD "ecommerce/features/transaction_detail/data"
-	// tdxH "ecommerce/features/transaction_detail/handler"
-	// tdxS "ecommerce/features/transaction_detail/services"
-	usrD "ecommerce/features/user/data"
-	usrH "ecommerce/features/user/handler"
-	usrS "ecommerce/features/user/services"
+	// tdxD "github.com/wussh/tokokentang/features/transaction_detail/data"
+	// tdxH "github.com/wussh/tokokentang/features/transaction_detail/handler"
+	// tdxS "github.com/wussh/tokokentang/features/transaction_detail/services"
 	"log"
+
+	usrD "github.com/wussh/tokokentang/features/user/data"
+	usrH "github.com/wussh/tokokentang/features/user/handler"
+	usrS "github.com/wussh/tokokentang/features/user/services"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

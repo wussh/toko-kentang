@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"ecommerce/features/transaction_detail"
+	"github.com/wussh/tokokentang/features/transaction_detail"
 )
 
 type transaction_detailControll struct {

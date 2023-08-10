@@ -1,6 +1,6 @@
 package handler
 
-import "ecommerce/features/product"
+import "github.com/wussh/tokokentang/features/product"
 
 type ProductResponse struct {
 	Title       string `validate:"required" json:"title" form:"title"`

@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"ecommerce/features/cart"
-	"ecommerce/helper"
 	"net/http"
 	"strconv"
+
+	"github.com/wussh/tokokentang/features/cart"
+	"github.com/wussh/tokokentang/helper"
 
 	"github.com/labstack/echo/v4"
 )

@@ -2,11 +2,12 @@ package helper
 
 import (
 	"context"
-	config "ecommerce/config"
 	"io"
 	"mime/multipart"
 	"net/http"
 	"time"
+
+	config "github.com/wussh/tokokentang/config"
 
 	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"

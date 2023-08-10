@@ -13,9 +13,9 @@ type CoreProduct struct {
 	Description string
 	Image       string
 	UserID      uint
-	Category    string
 	// Seller      string
-	User CoreUser
+	Category string
+	User     CoreUser
 }
 
 type CoreUser struct {
@@ -27,7 +27,6 @@ type ProductHandler interface {
 	Add() echo.HandlerFunc
 	GetAll() echo.HandlerFunc
 	GetById() echo.HandlerFunc
-	GetAllByCategory() echo.HandlerFunc
 	Update() echo.HandlerFunc
 	Delete() echo.HandlerFunc
 }

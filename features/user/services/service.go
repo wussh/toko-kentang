@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"ecommerce/config"
-	"ecommerce/features/user"
-	"ecommerce/helper"
+	"github.com/wussh/tokokentang/config"
+	"github.com/wussh/tokokentang/features/user"
+	"github.com/wussh/tokokentang/helper"
 
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
@@ -95,7 +95,7 @@ func (uuc *userUseCase) Update(formHeader multipart.FileHeader, token interface{
 	hashed, err := bcrypt.GenerateFromPassword([]byte(updatedProfile.Password), bcrypt.DefaultCost)
 	if err != nil {
 		log.Println("generate bcrypt error : ", err.Error())
-		return user.Core{},errors.New("Unable to process password")
+		return user.Core{}, errors.New("Unable to process password")
 	}
 	updatedProfile.Password = string(hashed)
 

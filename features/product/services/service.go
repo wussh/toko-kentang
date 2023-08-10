@@ -1,12 +1,13 @@
 package services
 
 import (
-	"ecommerce/features/product"
-	"ecommerce/helper"
 	"errors"
 	"fmt"
 	"mime/multipart"
 	"strings"
+
+	"github.com/wussh/tokokentang/features/product"
+	"github.com/wussh/tokokentang/helper"
 
 	"github.com/go-playground/validator"
 )

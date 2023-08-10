@@ -1,7 +1,7 @@
 package services
 
 import (
-	"ecommerce/features/transaction_detail"
+	"github.com/wussh/tokokentang/features/transaction_detail"
 
 	"github.com/go-playground/validator"
 )

@@ -1,4 +1,4 @@
-module ecommerce
+module github.com/wussh/tokokentang
 
 go 1.20
 

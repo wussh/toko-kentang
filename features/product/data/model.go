@@ -1,10 +1,10 @@
 package data
 
 import (
-	c "ecommerce/features/cart/data"
-	"ecommerce/features/product"
+	c "github.com/wussh/tokokentang/features/cart/data"
+	"github.com/wussh/tokokentang/features/product"
 
-	x "ecommerce/features/transaction_detail/data"
+	x "github.com/wussh/tokokentang/features/transaction_detail/data"
 
 	"gorm.io/gorm"
 )
@@ -12,9 +12,9 @@ import (
 type Products struct {
 	gorm.Model
 	Title             string
-	Category          string
 	Price             uint
 	Description       string
+	Category          string
 	Image             string
 	UserID            uint
 	User              Users
@@ -66,11 +66,4 @@ func ToCoresArr(data []Products) []product.CoreProduct {
 		arrRes = append(arrRes, tmp)
 	}
 	return arrRes
-}
-
-type ProductData interface {
-	// Fungsi-fungsi lain ...
-
-	// GetProductsByCategory mengambil semua produk berdasarkan kategori.
-	GetProductsByCategory(category string) ([]Products, error)
 }

@@ -1,8 +1,8 @@
 package data
 
 import (
-	c "ecommerce/features/cart/data"
-	"ecommerce/features/transaction_detail"
+	c "github.com/wussh/tokokentang/features/cart/data"
+	"github.com/wussh/tokokentang/features/transaction_detail"
 
 	"gorm.io/gorm"
 )

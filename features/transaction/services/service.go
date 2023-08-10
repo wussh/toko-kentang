@@ -1,11 +1,12 @@
 package services
 
 import (
-	"ecommerce/features/transaction"
-	"ecommerce/helper"
 	"errors"
 	"fmt"
 	"strings"
+
+	"github.com/wussh/tokokentang/features/transaction"
+	"github.com/wussh/tokokentang/helper"
 )
 
 type trxSrv struct {
