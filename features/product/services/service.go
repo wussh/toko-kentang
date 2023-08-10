@@ -35,6 +35,19 @@ func (puu *productUseCase) GetAll() ([]product.CoreProduct, error) {
 	}
 	return res, nil
 }
+func (puu *productUseCase) GetAllByCategory(category string) ([]product.CoreProduct, error) {
+	res, err := puu.qry.GetAllByCategory(category)
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "data not found"
+		} else {
+			msg = "There is a problem with the server"
+		}
+		return []product.CoreProduct{}, errors.New(msg)
+	}
+	return res, nil
+}
 
 func (puu *productUseCase) Add(newProduct product.CoreProduct, token interface{}, file *multipart.FileHeader) (product.CoreProduct, error) {
 	id := helper.ExtractToken(token)

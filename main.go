@@ -68,6 +68,7 @@ func main() {
 
 	e.GET("/products/:id", productHdl.GetById())
 	e.GET("/products", productHdl.GetAll())
+	e.GET("/products/category/:category", productHdl.GetAllByCategory())
 	e.POST("/products", productHdl.Add(), middleware.JWT([]byte(config.JWTKey)))
 	e.PUT("/products/:id", productHdl.Update(), middleware.JWT([]byte(config.JWTKey)))
 	e.DELETE("/products/:id", productHdl.Delete(), middleware.JWT([]byte(config.JWTKey)))

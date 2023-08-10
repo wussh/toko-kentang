@@ -32,6 +32,17 @@ func (pc *productControll) GetAll() echo.HandlerFunc {
 	}
 }
 
+func (pc *productControll) GetAllByCategory() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		category := c.QueryParam("category")
+		res, err := pc.srv.GetAllByCategory(category)
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+		return c.JSON(helper.PrintSuccessReponse(http.StatusOK, "berhasil menampilkan product", ToResponseArr2(res)))
+	}
+}
+
 func (pc *productControll) Add() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		token := c.Get("user")

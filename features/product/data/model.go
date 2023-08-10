@@ -14,6 +14,7 @@ type Products struct {
 	Title             string
 	Price             uint
 	Description       string
+	Category          string
 	Image             string
 	UserID            uint
 	User              Users

@@ -30,10 +30,20 @@ func (pq *productQuery) GetAll() ([]product.CoreProduct, error) {
 	Y := ToCoresArr(sementara)
 	return Y, nil
 }
+func (pq *productQuery) GetAllByCategory(category string) ([]product.CoreProduct, error) {
+	var sementara []Products
+
+	if err := pq.db.Where("category = ?", category).Find(&sementara).Error; err != nil {
+		log.Println("Get All By Category query error", err.Error())
+		return ToCoresArr(sementara), err
+	}
+	return ToCoresArr(sementara), nil
+}
 
 func (pq *productQuery) Add(newProduct product.CoreProduct, id uint) (product.CoreProduct, error) {
 	cnv := CoreToData(newProduct)
 	cnv.UserID = id
+	cnv.Category = newProduct.Category
 	fmt.Println("======data1=====")
 	err := pq.db.Create(&cnv).Error
 
