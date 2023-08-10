@@ -1,12 +1,6 @@
 package handler
 
 import (
-<<<<<<< HEAD
-=======
-	"ecommerce/features/product"
-	"ecommerce/helper"
-	"fmt"
->>>>>>> parent of 77a252c (fix bug product catagory)
 	"log"
 	"net/http"
 	"strconv"
