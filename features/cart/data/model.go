@@ -1,21 +1,10 @@
 package data
 
 import (
-	"ecommerce/features/cart"
-	"ecommerce/features/product/data"
+	"ecommerce/features/product"
 
 	"gorm.io/gorm"
 )
-
-type Carts struct {
-	gorm.Model
-	Qty         uint
-	Total_price uint
-	UserID      uint
-	User        data.User
-	ProductID   uint
-	Product     data.Products
-}
 
 type Products struct {
 	gorm.Model
@@ -23,43 +12,48 @@ type Products struct {
 	Price       uint
 	Description string
 	Image       string
+	UserID      uint
+	User        User
 }
 type User struct {
 	gorm.Model
-	Avatar   string
-	Name     string
-	Email    string
-	Address  string
-	Password string
+	Avatar    string
+	Name      string
+	Email     string
+	Address   string
+	Password  string
+	Productss []Products
+	UserID    uint
 }
 
-func ToCores(data Carts) cart.CoreCart {
-	return cart.CoreCart{
+func ToCores(data Products) product.CoreProduct {
+	return product.CoreProduct{
 		ID:          data.ID,
-		Title:       data.Product.Title,
-		Qty:         data.Qty,
-		Price:       data.Product.Price,
-		Image:       data.Product.Image,
-		Total_Price: data.Total_price,
+		Title:       data.Title,
+		Price:       data.Price,
+		Description: data.Description,
+		Image:       data.Image,
 		UserID:      data.User.ID,
-		ProductID:   data.Product.ID,
+		Seller:      data.User.Name,
 	}
 }
-func ToCoresArr(data []Carts) []cart.CoreCart {
-	arrRes := []cart.CoreCart{}
+
+func CoreToData(data product.CoreProduct) Products {
+	return Products{
+		Model:       gorm.Model{ID: data.ID},
+		Title:       data.Title,
+		Price:       data.Price,
+		Description: data.Description,
+		Image:       data.Image,
+		UserID:      data.UserID,
+		// Seller:      data.User.Name,
+	}
+}
+func ToCoresArr(data []Products) []product.CoreProduct {
+	arrRes := []product.CoreProduct{}
 	for _, v := range data {
 		tmp := ToCores(v)
 		arrRes = append(arrRes, tmp)
 	}
 	return arrRes
-}
-
-func CoreToData(data cart.CoreCart) Carts {
-	return Carts{
-		Model:       gorm.Model{ID: data.ID},
-		Qty:         data.Qty,
-		Total_price: data.Total_Price,
-		UserID:      data.UserID,
-		ProductID:   data.ProductID,
-	}
 }
