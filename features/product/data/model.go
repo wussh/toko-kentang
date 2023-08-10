@@ -12,9 +12,9 @@ import (
 type Products struct {
 	gorm.Model
 	Title             string
+	Category          string
 	Price             uint
 	Description       string
-	Category          string
 	Image             string
 	UserID            uint
 	User              Users
@@ -66,4 +66,11 @@ func ToCoresArr(data []Products) []product.CoreProduct {
 		arrRes = append(arrRes, tmp)
 	}
 	return arrRes
+}
+
+type ProductData interface {
+	// Fungsi-fungsi lain ...
+
+	// GetProductsByCategory mengambil semua produk berdasarkan kategori.
+	GetProductsByCategory(category string) ([]Products, error)
 }
