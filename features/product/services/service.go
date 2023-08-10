@@ -27,7 +27,6 @@ func (puu *productUseCase) GetAll() ([]product.CoreProduct, error) {
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {
-			msg = "product tidak ditemukan"
 			msg = "data not found"
 		} else {
 			msg = "data tidak bisa diolah"
@@ -64,7 +63,6 @@ func (puu *productUseCase) Add(newProduct product.CoreProduct, token interface{}
 		newProduct.Image = uploadUrl
 	}
 
-	// err := cuu.vld.Struct(newProduct)
 	// err := puu.vld.Struct(newProduct)
 	// if err != nil {
 	// 	log.Println(err)
@@ -73,12 +71,13 @@ func (puu *productUseCase) Add(newProduct product.CoreProduct, token interface{}
 	// 	}
 	// 	return product.CoreProduct{}, errors.New("field required wajib diisi")
 	// }
+	fmt.Println("======service2=====")
 	res, err := puu.qry.Add(newProduct, uint(id))
+	fmt.Println("======service3=====")
 
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {
-			msg = "id tidak ditemukan"
 			msg = "kesalahan input"
 		} else {
 			msg = "data tidak bisa diolah"
@@ -96,7 +95,6 @@ func (puu *productUseCase) GetById(token interface{}, idProduct uint) ([]product
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {
-			msg = "product tidak ditemukan"
 			msg = "data not found"
 		} else {
 			msg = "data tidak bisa diolah"
