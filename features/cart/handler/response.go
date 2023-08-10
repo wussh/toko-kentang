@@ -1,6 +1,6 @@
 package handler
 
-import "github.com/wussh/tokokentang/features/cart"
+import "ecommerce/features/cart"
 
 type CartResponse struct {
 	ID          uint   `json:"id"`

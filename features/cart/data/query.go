@@ -1,11 +1,10 @@
 package data
 
 import (
+	"ecommerce/features/cart"
 	"errors"
 	"log"
 	"strings"
-
-	"github.com/wussh/tokokentang/features/cart"
 
 	"gorm.io/gorm"
 )

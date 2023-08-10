@@ -1,11 +1,11 @@
 package data
 
 import (
-	c "github.com/wussh/tokokentang/features/cart/data"
-	p "github.com/wussh/tokokentang/features/product/data"
-	"github.com/wussh/tokokentang/features/transaction"
+	c "ecommerce/features/cart/data"
+	p "ecommerce/features/product/data"
+	"ecommerce/features/transaction"
 
-	x "github.com/wussh/tokokentang/features/transaction_detail/data"
+	x "ecommerce/features/transaction_detail/data"
 
 	"gorm.io/gorm"
 )

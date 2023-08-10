@@ -1,14 +1,15 @@
 package config
 
 import (
+	cart "ecommerce/features/cart/data"
+	product "ecommerce/features/product/data"
+
+	trx "ecommerce/features/transaction/data"
+
+	transaction_detail "ecommerce/features/transaction_detail/data"
+	user "ecommerce/features/user/data"
 	"fmt"
 	"log"
-
-	cart "github.com/wussh/tokokentang/features/cart/data"
-	product "github.com/wussh/tokokentang/features/product/data"
-	transaction "github.com/wussh/tokokentang/features/transaction/data"
-	transaction_detail "github.com/wussh/tokokentang/features/transaction_detail/data"
-	user "github.com/wussh/tokokentang/features/user/data"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -30,6 +31,6 @@ func Migrate(db *gorm.DB) {
 	db.AutoMigrate(user.Users{})
 	db.AutoMigrate(product.Products{})
 	db.AutoMigrate(cart.Carts{})
-	db.AutoMigrate(transaction.Transactions{})
+	db.AutoMigrate(trx.Transactions{})
 	db.AutoMigrate(transaction_detail.Transaction_Detail{})
 }

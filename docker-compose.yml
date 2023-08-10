@@ -1,15 +1,31 @@
-FROM golang:1.20-alpine
+version: '3.7'
 
-##create folder APP
-RUN mkdir /app
+services:
+  postgres:
+    image: postgres:latest
+    container_name: myapp-postgres
+    environment:
+      POSTGRES_USER: ${DBUSER}
+      POSTGRES_PASSWORD: ${DBPASS}
+      POSTGRES_DB: ${DBNAME}
+    ports:
+      - "${DBPORT}:5432"  # Map the external port to the PostgreSQL internal port
 
-##set main directory
-WORKDIR /app
-
-##copy the whole file to app
-COPY . .
-
-##create executable
-RUN go build -o main .
-
-##CMD is defined in the docker-compose.yml file, so it can be omitted here
+  myapp:
+    image: golang:latest
+    container_name: myapp-container
+    working_dir: /go/src/app
+    volumes:
+      - ./app:/go/src/app  # Mount your Go app directory to the container
+    environment:
+      DB_USER: ${DBUSER}
+      DB_PASS: ${DBPASS}
+      DB_HOST: ${DBHOST}
+      DB_PORT: ${DBPORT}
+      DB_NAME: ${DBNAME}
+      JWT_KEY: ${JWTKey}
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"  # Expose your app's port, adjust if your app runs on a different port
+    command: go run main.go  # Modify this if you have a different command to start your Go app

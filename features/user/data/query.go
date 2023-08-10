@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/wussh/tokokentang/features/user"
+	"ecommerce/features/user"
 
 	"gorm.io/gorm"
 )

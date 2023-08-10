@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/wussh/tokokentang/features/transaction_detail"
+	"ecommerce/features/transaction_detail"
 
 	"gorm.io/gorm"
 )

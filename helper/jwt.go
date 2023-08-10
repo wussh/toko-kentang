@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"github.com/wussh/tokokentang/config"
+	"ecommerce/config"
 
 	"github.com/golang-jwt/jwt"
 )

@@ -1,13 +1,11 @@
 package services
 
 import (
+	"ecommerce/features/product"
+	"ecommerce/helper"
 	"errors"
-	"fmt"
 	"mime/multipart"
 	"strings"
-
-	"github.com/wussh/tokokentang/features/product"
-	"github.com/wussh/tokokentang/helper"
 
 	"github.com/go-playground/validator"
 )
@@ -36,23 +34,9 @@ func (puu *productUseCase) GetAll() ([]product.CoreProduct, error) {
 	}
 	return res, nil
 }
-func (puu *productUseCase) GetAllByCategory(category string) ([]product.CoreProduct, error) {
-	res, err := puu.qry.GetAllByCategory(category)
-	if err != nil {
-		msg := ""
-		if strings.Contains(err.Error(), "not found") {
-			msg = "data not found"
-		} else {
-			msg = "There is a problem with the server"
-		}
-		return []product.CoreProduct{}, errors.New(msg)
-	}
-	return res, nil
-}
 
 func (puu *productUseCase) Add(newProduct product.CoreProduct, token interface{}, file *multipart.FileHeader) (product.CoreProduct, error) {
 	id := helper.ExtractToken(token)
-	fmt.Println("======service=====")
 	if file != nil {
 		if file.Size > 5000000 {
 			return product.CoreProduct{}, errors.New("file size is too big")
@@ -85,9 +69,7 @@ func (puu *productUseCase) Add(newProduct product.CoreProduct, token interface{}
 	// 	}
 	// 	return product.CoreProduct{}, errors.New("field required wajib diisi")
 	// }
-	fmt.Println("======service2=====")
 	res, err := puu.qry.Add(newProduct, uint(id))
-	fmt.Println("======service3=====")
 
 	if err != nil {
 		msg := ""
@@ -171,4 +153,17 @@ func (puu *productUseCase) Delete(token interface{}, productId uint) error {
 	}
 
 	return nil
+}
+func (puu *productUseCase) GetAllByCategory(category string) ([]product.CoreProduct, error) {
+	res, err := puu.qry.GetAllByCategory(category)
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "data not found"
+		} else {
+			msg = "There is a problem with the server"
+		}
+		return []product.CoreProduct{}, errors.New(msg)
+	}
+	return res, nil
 }

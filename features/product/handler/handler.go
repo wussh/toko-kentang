@@ -1,12 +1,11 @@
 package handler
 
 import (
+	"ecommerce/features/product"
+	"ecommerce/helper"
 	"log"
 	"net/http"
 	"strconv"
-
-	"github.com/wussh/tokokentang/features/product"
-	"github.com/wussh/tokokentang/helper"
 
 	"github.com/labstack/echo/v4"
 )
@@ -32,17 +31,6 @@ func (pc *productControll) GetAll() echo.HandlerFunc {
 	}
 }
 
-func (pc *productControll) GetAllByCategory() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		category := c.QueryParam("category")
-		res, err := pc.srv.GetAllByCategory(category)
-		if err != nil {
-			return c.JSON(helper.PrintErrorResponse(err.Error()))
-		}
-		return c.JSON(helper.PrintSuccessReponse(http.StatusOK, "berhasil menampilkan product", ToResponseArr2(res)))
-	}
-}
-
 func (pc *productControll) Add() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		token := c.Get("user")
@@ -58,12 +46,10 @@ func (pc *productControll) Add() echo.HandlerFunc {
 		if err != nil {
 			file = nil
 		}
-		fmt.Println("====handler======")
 		_, err = pc.srv.Add(*newProduct, token, file)
 		if err != nil {
 			return c.JSON(helper.PrintErrorResponse(err.Error()))
 		}
-		fmt.Println("====handler2======")
 		return c.JSON(http.StatusOK, helper.SuccessResponse("posting product berhasil"))
 
 	}
@@ -129,5 +115,16 @@ func (pc *productControll) Delete() echo.HandlerFunc {
 			return c.JSON(helper.PrintErrorResponse(err2.Error()))
 		}
 		return c.JSON(http.StatusOK, helper.SuccessResponse("Delete product berhasil"))
+	}
+}
+
+func (pc *productControll) GetAllByCategory() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		category := c.QueryParam("category")
+		res, err := pc.srv.GetAllByCategory(category)
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+		return c.JSON(helper.PrintSuccessReponse(http.StatusOK, "berhasil menampilkan product", ToResponseArr2(res)))
 	}
 }

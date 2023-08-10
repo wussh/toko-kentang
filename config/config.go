@@ -8,7 +8,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-var JWTKey string = ""
+var (
+	JWTKey string = ""
+)
 
 type AppConfig struct {
 	DBUser string
@@ -69,8 +71,10 @@ func ReadEnv() *AppConfig {
 			log.Println("error parse config : ", err.Error())
 			return nil
 		}
+
 	}
 
 	JWTKey = app.jwtKey
+
 	return &app
 }

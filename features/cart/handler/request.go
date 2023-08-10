@@ -1,6 +1,6 @@
 package handler
 
-import "github.com/wussh/tokokentang/features/cart"
+import "ecommerce/features/cart"
 
 type UptReq struct {
 	Qty         uint `validate:"required" json:"qty" form:"qty"`

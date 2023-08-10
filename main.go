@@ -1,26 +1,25 @@
 package main
 
 import (
-	"github.com/wussh/tokokentang/config"
-	cartData "github.com/wussh/tokokentang/features/cart/data"
-	cartHandler "github.com/wussh/tokokentang/features/cart/handler"
-	cartService "github.com/wussh/tokokentang/features/cart/services"
-	productData "github.com/wussh/tokokentang/features/product/data"
-	productHandler "github.com/wussh/tokokentang/features/product/handler"
-	productService "github.com/wussh/tokokentang/features/product/services"
+	"ecommerce/config"
+	cartData "ecommerce/features/cart/data"
+	cartHandler "ecommerce/features/cart/handler"
+	cartService "ecommerce/features/cart/services"
+	productData "ecommerce/features/product/data"
+	productHandler "ecommerce/features/product/handler"
+	productService "ecommerce/features/product/services"
 
-	// trxD "github.com/wussh/tokokentang/features/transaction/data"
-	// trxH "github.com/wussh/tokokentang/features/transaction/handler"
-	// trxS "github.com/wussh/tokokentang/features/transaction/services"
+	trxD "ecommerce/features/transaction/data"
+	trxH "ecommerce/features/transaction/handler"
+	trxS "ecommerce/features/transaction/services"
 
-	// tdxD "github.com/wussh/tokokentang/features/transaction_detail/data"
-	// tdxH "github.com/wussh/tokokentang/features/transaction_detail/handler"
-	// tdxS "github.com/wussh/tokokentang/features/transaction_detail/services"
+	// tdxD "ecommerce/features/transaction_detail/data"
+	// tdxH "ecommerce/features/transaction_detail/handler"
+	// tdxS "ecommerce/features/transaction_detail/services"
+	usrD "ecommerce/features/user/data"
+	usrH "ecommerce/features/user/handler"
+	usrS "ecommerce/features/user/services"
 	"log"
-
-	usrD "github.com/wussh/tokokentang/features/user/data"
-	usrH "github.com/wussh/tokokentang/features/user/handler"
-	usrS "github.com/wussh/tokokentang/features/user/services"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -44,9 +43,9 @@ func main() {
 	cartSrv := cartService.New(cartDt)
 	cartHdl := cartHandler.New(cartSrv)
 
-	// trxData := trxD.New(db)
-	// trxSrv := trxS.New(trxData)
-	// trxHdl := trxH.New(trxSrv)
+	trxData := trxD.New(db)
+	trxSrv := trxS.New(trxData)
+	trxHdl := trxH.New(trxSrv)
 
 	// trxDataa := tdxD.New(db)
 	// trxService := tdxS.New(trxDataa)
@@ -80,7 +79,7 @@ func main() {
 	e.PUT("/checkout/:idCart", cartHdl.Update(), middleware.JWT([]byte(config.JWTKey)))
 	e.DELETE("/carts/:idCart", cartHdl.Delete(), middleware.JWT([]byte(config.JWTKey)))
 
-	// e.POST("/transactions/:id", trxHdl.Add(), middleware.JWT([]byte(config.JWTKey)))
+	e.POST("/transactions", trxHdl.Add(), middleware.JWT([]byte(config.JWTKey)))
 
 	if err := e.Start(":8000"); err != nil {
 		log.Println(err.Error())

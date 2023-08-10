@@ -1,15 +1,15 @@
 package data
 
 import (
-	c "github.com/wussh/tokokentang/features/cart/data"
-	"github.com/wussh/tokokentang/features/transaction_detail"
+	c "ecommerce/features/cart/data"
+	"ecommerce/features/transaction_detail"
 
 	"gorm.io/gorm"
 )
 
 type Transaction_Detail struct {
-	TransactionID uint `gorm:"primaryKey"`
-	ProductID     uint `gorm:"primaryKey"`
+	TransactionID uint
+	ProductID     uint
 	Title         string
 	Price         uint
 	Qty           uint
