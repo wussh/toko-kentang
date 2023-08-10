@@ -95,7 +95,7 @@ func (uuc *userUseCase) Update(formHeader multipart.FileHeader, token interface{
 	hashed, err := bcrypt.GenerateFromPassword([]byte(updatedProfile.Password), bcrypt.DefaultCost)
 	if err != nil {
 		log.Println("generate bcrypt error : ", err.Error())
-		return user.Core{}, errors.New("Unable to process password")
+		return user.Core{},errors.New("Unable to process password")
 	}
 	updatedProfile.Password = string(hashed)
 

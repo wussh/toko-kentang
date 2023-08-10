@@ -3,22 +3,22 @@ package handler
 import "ecommerce/features/user"
 
 type RegisterRequest struct {
-	Name     string `json:"name" form:"name"`
-	Email    string `json:"email" form:"email"`
+	Name string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
-	Address  string `json:"address" form:"address"`
+	Address string `json:"address" form:"address"`
 }
 
 type UpdateRequest struct {
-	Avatar   string `json:"avatar" form:"avatar"`
-	Name     string `json:"name" form:"name"`
-	Email    string `json:"email" form:"email"`
+	Avatar string `json:"avatar" form:"avatar"`
+	Name string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
-	Address  string `json:"address" form:"address"`
+	Address string `json:"address" form:"address"`
 }
 
 type LoginRequest struct {
-	Email    string `json:"email"  form:"email"`
+	Email string `json:"email"  form:"email"`
 	Password string `json:"password" form:"password"`
 }
 
