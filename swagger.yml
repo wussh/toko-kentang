@@ -1,0 +1,760 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Toko Kentang
+  description: RESTful API
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/wussh/TokoKentang/1.0.0
+  - description: EC2 PublicIP
+    url: 54.169.122.139
+tags:
+  - name: Auth
+  - name: Users
+  - name: Products
+  - name: Carts
+  - name: Transactions
+paths:
+  /register:
+    post:
+      tags:
+        - Auth
+      description: To Add a new user
+      summary: register user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                address:
+                  type: string
+            example:
+              name: daud
+              email: kocak@gmail.com
+              password: root
+              address: sby
+      responses:
+        '201':
+          description: Success Register
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Registered a new account successfully
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /login:
+    post:
+      tags:
+        - Auth
+      description: User Login to the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Success login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseObject'
+              example:
+                data:
+                  id: 1
+                  avatar: www.google.com
+                  name: daud
+                  email: kocak@gmail.com
+                message: Logged in successfully
+                token: rdfcgbhjmlk
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          description: Invalid user input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: data not found
+        '500':
+          $ref: '#/components/responses/500'
+  /users:
+    put:
+      tags:
+        - Users
+      summary: Update user data
+      description: Update user data
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              example:
+                name: andrianatadaud
+                avatar: www.google.com
+                email: kocakgeming@gmail.com
+                password: 'root'
+                address: jalan jalan
+      responses:
+        '200':
+          description: Success update profile
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Updated profile successfully
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Users
+      summary: Deactivate user
+      description: Deactivate user
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Success deactivate
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Deactivated your account successfully
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Users
+      summary: Show profile & products
+      description: show profile & products
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: Success show user data
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    name: andrianata daud
+                    avatar: www.google.com
+                    email: kocakgeming@gmail.com
+                    address: jalan jalan
+                    products:
+                      - id: 1
+                        title: kapak
+                        category: senjata
+                        price: 50000
+                        description: kapak balmond
+                        image: www.google.com
+                  message: Displayed user profile successfully
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /products:
+    post:
+      tags:
+        - Products
+      summary: Add products to user
+      description: menambahkan product ke user
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              example:
+                title: kapak
+                catagory: senjata
+                price: 100000
+                description: kapak balmond
+                image: www.google.com
+      responses:
+        '201':
+          description: Posting berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: posting product berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Products
+      summary: Get all product from all user without Login
+      description: menampilkan semua product dari semua user untuk fungsi tanpa login
+      responses:
+        '200':
+          description: data product dari semua user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    - id: 1
+                      title: kapak
+                      catagory: senjata
+                      price: 100000
+                      image: www.google.com
+                    - id: 2
+                      title: tombak
+                      catagory: senjata
+                      price: 500000
+                      image: www.google.com
+                  message: berhasil menampilkan semua product
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /products/{category}:
+    get:
+      tags:
+        - Products
+      summary: Get all product category from all user without Login
+      description: menampilkan semua product berdasarkan kategori dari semua user untuk fungsi tanpa login
+      parameters:
+        - name: category
+          description: category product
+          required: true
+          in: path
+          schema:
+            description: category product
+            type: string
+            example: senjata
+      responses:
+        '200':
+          description: data product dari semua user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    - id: 1
+                      title: kapak
+                      catagory: senjata
+                      price: 100000
+                      image: www.google.com
+                    - id: 2
+                      title: tombak
+                      catagory: senjata
+                      price: 500000
+                      image: www.google.com
+                  message: berhasil menampilkan semua product
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /products/{product_id}:
+    get:
+      tags:
+        - Products
+      summary: get product user by id product
+      description: menampilkan data product dari product id
+      parameters:
+        - name: product_id
+          description: id product
+          required: true
+          in: path
+          schema:
+            description: id product
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: data product dari product id
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    title: kapak
+                    catagory: senjata
+                    price: 100000
+                    description: kapak balmond
+                    image: www.google.com
+                    seller_name: paijo
+                  message: berhasil menampilkan product
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Products
+      summary: edit product to user
+      description: mengubah product user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: product_id
+          description: id product
+          required: true
+          in: path
+          schema:
+            description: id product
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              example:
+                title: kapak
+                catagory: senjata
+                price: 100000
+                description: kapak balmond
+                image: www.google.com
+      responses:
+        '200':
+          description: Berhasil update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseObject'
+              example:
+                message: update berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Products
+      summary: Delete product user
+      description: Menghapus product user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: product_id
+          description: id product
+          required: true
+          in: path
+          schema:
+            description: id product
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Berhasil delete
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Delete product berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /carts/{product_id}:
+    post:
+      tags:
+        - Carts
+      summary: Add products to cart
+      description: menambahkan product ke cart
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: product_id
+          description: id product
+          required: true
+          in: path
+          schema:
+            description: id product
+            type: integer
+            example: 1
+      responses:
+        '201':
+          description: Add cart berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Add cart berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /checkout/{cart_id}:
+    put:
+      tags:
+        - Carts
+      summary: edit cart user
+      description: mengubah cart user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: cart_id
+          description: id cart
+          required: true
+          in: path
+          schema:
+            description: id cart
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                qty: 2
+                total_price: 200000
+      responses:
+        '200':
+          description: Berhasil checkout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseObject'
+              example:
+                message: checkout berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /carts/{cart_id}:
+    get:
+      tags:
+        - Carts
+      summary: get cart by id cart
+      description: menampilkan data cart dari cart id setelah klik checkout
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: cart_id
+          description: id cart
+          required: true
+          in: path
+          schema:
+            description: id cart
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: data cart dari cart id
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    title: kapak
+                    qty: 1
+                    price: 50000
+                    image: www.google.com
+                    total_price: 50000
+                  message: berhasil menampilkan cart
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Carts
+      summary: Delete cart user
+      description: Menghapus cart user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: cart_id
+          description: id cart
+          required: true
+          in: path
+          schema:
+            description: id cart
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Berhasil delete
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Delete cart berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /carts:
+    get:
+      tags:
+        - Carts
+      summary: get cart by id user
+      description: menampilkan data cart dari user id
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: data cart dari user id
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    - id: 1
+                      title: kapak
+                      qty: 1
+                      price: 50000
+                      image: www.google.com
+                  message: berhasil menampilkan cart
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /transactions:
+    post:
+      tags:
+        - Transactions
+      summary: Add Transaction
+      description: menambahkan Transaction
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                address: jalan sriwiwiwi
+      responses:
+        '201':
+          description: Add Transaction berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Add Transaction berhasil
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+  /transactions/buy:
+    get:
+      tags:
+        - Transactions
+      summary: Get all buy transactions by User ID
+      description: menampilkan seluruh buy transactions by User ID
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: All sell transactions data
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    - id: 1
+                      title: kapak
+                      image: www.google.com
+                      qty: 1
+                      price: 50000
+                      total_price: 50000
+                      seller_name: daud
+                      status: pending
+                      updated_at: 11 Aug 2023
+                    - id: 2
+                      title: tombak
+                      image: www.google.com
+                      qty: 1
+                      price: 50000
+                      total_price: 50000
+                      seller_name: nata
+                      status: paid
+                      updated_at: 1 Aug 2023
+                  message: berhasil menampilkan all transactions
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /transactions/sell:
+    get:
+      tags:
+        - Transactions
+      summary: Get all sell transactions by User ID
+      description: menampilkan seluruh sell transactions by User ID
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: All buy transactions data
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    - id: 1
+                      title: kapak
+                      image: www.google.com
+                      qty: 1
+                      price: 50000
+                      total_price: 50000
+                      buyer_name: daud
+                      status: pending
+                      updated_at: 11 Aug 2023
+                    - id: 2
+                      title: tombak
+                      image: www.google.com
+                      qty: 1
+                      price: 50000
+                      total_price: 50000
+                      buye_name: nata
+                      status: paid
+                      updated_at: 11 Aug 2023
+                  message: berhasil menampilkan all buy transactions
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: user Token
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        avatar:
+          type: string
+    Content:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        price:
+          type: integer
+          format: int64
+        description:
+          type: string
+        image:
+          type: string
+    responseObject:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+    responseObjectArr:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        message:
+          type: string
+  responses:
+    '400':
+      description: Invalid user input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: Please input correctly
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: Data not found
+    '500':
+      description: Server's problem
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example:
+              message: There is a problem with the server

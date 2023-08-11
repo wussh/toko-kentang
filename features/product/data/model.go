@@ -38,6 +38,7 @@ func ToCores(data Products) product.CoreProduct {
 	return product.CoreProduct{
 		ID:          data.ID,
 		Title:       data.Title,
+		Category:    data.Category,
 		Price:       data.Price,
 		Description: data.Description,
 		Image:       data.Image,
@@ -52,6 +53,7 @@ func CoreToData(data product.CoreProduct) Products {
 	return Products{
 		Model:       gorm.Model{ID: data.ID},
 		Title:       data.Title,
+		Category:    data.Category,
 		Price:       data.Price,
 		Description: data.Description,
 		Image:       data.Image,
@@ -66,11 +68,4 @@ func ToCoresArr(data []Products) []product.CoreProduct {
 		arrRes = append(arrRes, tmp)
 	}
 	return arrRes
-}
-
-type ProductData interface {
-	// Fungsi-fungsi lain ...
-
-	// GetProductsByCategory mengambil semua produk berdasarkan kategori.
-	GetProductsByCategory(category string) ([]Products, error)
 }

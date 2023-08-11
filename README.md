@@ -141,7 +141,7 @@ JWTKey = koCakGemIng
 
 Base url: `<host>:8080`
 
-API documentation can be found [here](https://app.swaggerhub.com/)
+API documentation can be found [here](https://app.swaggerhub.com/apis/wussh/TokoKentang/1.0.0)
 
 # Database
 

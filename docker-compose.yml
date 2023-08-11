@@ -27,7 +27,7 @@ services:
 
   api:
     container_name: kentangapi
-    image: wushie/tokokentang:v3
+    image: wushie/tokokentang:v10
     env_file:
       - .env
     environment:

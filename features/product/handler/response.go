@@ -5,6 +5,7 @@ import "ecommerce/features/product"
 type ProductResponse struct {
 	Title       string `validate:"required" json:"title" form:"title"`
 	Price       uint   `validate:"required" json:"price" form:"price"`
+	Category    string `validate:"required" json:"category" form:"category"`
 	Description string `json:"description" form:"description"`
 	Image       string `json:"image" form:"image"`
 	// Seller      string       `json:"seller_name" form:"seller_name"`
@@ -13,10 +14,11 @@ type ProductResponse struct {
 }
 
 type GetAllRespon struct {
-	ID    uint   `json:"id" form:"id"`
-	Title string `validate:"required" json:"title" form:"title"`
-	Price uint   `validate:"required" json:"price" form:"price"`
-	Image string `json:"image" form:"image"`
+	ID       uint   `json:"id" form:"id"`
+	Title    string `validate:"required" json:"title" form:"title"`
+	Category string `validate:"required" json:"category" form:"category"`
+	Price    uint   `validate:"required" json:"price" form:"price"`
+	Image    string `json:"image" form:"image"`
 }
 
 // type UserResponse struct {
@@ -26,9 +28,10 @@ type GetAllRespon struct {
 
 func ToResponse(data product.CoreProduct) GetAllRespon {
 	return GetAllRespon{
-		ID:    data.ID,
-		Title: data.Title,
-		Price: data.Price,
+		ID:       data.ID,
+		Title:    data.Title,
+		Category: data.Category,
+		Price:    data.Price,
 		// Description: data.Description,
 		Image: data.Image,
 	}
@@ -46,6 +49,7 @@ func ToResponseArr(data []product.CoreProduct) []GetAllRespon {
 func ToResponse2(data product.CoreProduct) ProductResponse {
 	return ProductResponse{
 		Title:       data.Title,
+		Category:    data.Category,
 		Price:       data.Price,
 		Description: data.Description,
 		Image:       data.Image,
