@@ -81,7 +81,7 @@ func main() {
 
 	e.POST("/transactions", trxHdl.Add(), middleware.JWT([]byte(config.JWTKey)))
 
-	if err := e.Start(":8000"); err != nil {
+	if err := e.Start(":8080"); err != nil {
 		log.Println(err.Error())
 	}
 }
