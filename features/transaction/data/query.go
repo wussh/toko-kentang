@@ -38,29 +38,27 @@ func (tq *trxQuery) Add(userID uint, newTrx transaction.Core) (transaction.Core,
 
 	trxID := cnv.ID
 
-	var productID uint64
+	var productID uint
 	var title string
-	var price int64
-	var qty int64
-	var total int64
+	var price, qty, total uint
 
 	for i := 0; i < len(getCart); i++ {
 		for k, v := range getCart[i] {
 			switch k {
 			case "id":
-				productID = v.(uint64)
+				productID = uint(v.(int64))
 			case "title":
 				title = v.(string)
 			case "price":
-				price = v.(int64)
+				price = uint(v.(int64))
 			case "qty":
-				qty = v.(int64)
+				qty = uint(v.(int64))
 			}
 		}
 
 		total = total + (price * qty)
 
-		if err := tq.db.Exec("INSERT into transaction_details(transaction_id, product_id, title, price, qty, total_price) VALUE(?,?,?,?,?,?)", trxID, productID, title, price, qty, total).Error; err != nil {
+		if err := tq.db.Exec("INSERT into transaction_details(transaction_id, product_id, title, price, qty, total_price) VALUES (?,?,?,?,?,?)", trxID, productID, title, price, qty, total).Error; err != nil {
 			tq.db.Rollback()
 			log.Println("Insert new transaction detail query error : ", err.Error())
 			return transaction.Core{}, err
@@ -69,11 +67,11 @@ func (tq *trxQuery) Add(userID uint, newTrx transaction.Core) (transaction.Core,
 	}
 
 	if err := tq.db.Exec("UPDATE transactions SET total_price = ? WHERE id = ?", total, trxID).Error; err != nil {
-		log.Println("Get cart query error : ", err.Error())
+		log.Println("Update total_price query error : ", err.Error())
 		return transaction.Core{}, err
 	}
 
-	cnv.TotalPrice = uint(total)
+	cnv.TotalPrice = total
 
 	return ToCore(cnv), nil
 }
