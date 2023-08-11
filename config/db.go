@@ -16,8 +16,8 @@ import (
 )
 
 func InitDB(ac AppConfig) *gorm.DB {
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
-		ac.DBHost, ac.DBUser, ac.DBPass, ac.DBName)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta",
+		ac.DBHost, ac.DBUser, ac.DBPass, ac.DBName, ac.DBPort)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Println("Database connection error:", err.Error())

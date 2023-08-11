@@ -132,7 +132,7 @@ JWTKey = koCakGemIng
 ```
   $ docker-compose up
 ```
-# How to run
+# How to stop
 - To stop the whole system
 ```
   $ docker-compose down
