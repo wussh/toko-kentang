@@ -137,6 +137,11 @@ JWTKey = koCakGemIng
 ```
   $ docker-compose down
 ```
+
+# Docker image
+```
+  $ docker pull wushie/tokokentang:v10
+```
 # API
 
 Base url: `<host>:8080`
